@@ -17,7 +17,7 @@ const miner_history = (address, callback) => {
     let finished = false;
     let days = 1;
 
-    console.log(`getting data from ${moment(START_DATE).format('YYYY-MM-DD')} to ${moment(END_DATE).format('YYYY-MM-DD')} Total: ${MAX_DAYS} Days for ${colors.bgRed(address)}`);
+    console.log(`getting data from ${moment(START_DATE).format('YYYY-MM-DD')} to ${moment(END_DATE).format('YYYY-MM-DD')} Total: ${MAX_DAYS} Days for ${colors.bgYellow(address)}`);
     console.log(colors.bgBrightRed(`GO GRAB A COFFE! ESTIMATED TIME ${moment.duration(1*MAX_DAYS, "seconds").humanize()}`));
 
     function sleep(ms) {
@@ -76,11 +76,16 @@ async.eachSeries(_.split(HT_ADDRESSES, ','), (address, callback) => {
     miner_history(address, (err, results) => {
         if (err) callback(err);
 
-        const total = _.reduce(results, function (sum, r) {
+        const taxable_total = _.reduce(results, function (sum, r) {
             return sum + r.taxable;
         }, 0);
 
-        console.log(colors.bgBrightGreen(`Taxable income for perdiod $${total.toFixed(2)}`));
+        const mined_total = _.reduce(results, function (sum, r) {
+            return sum + r.mined;
+        }, 0);
+
+        console.log(colors.bgBrightGreen(`Mined for period ${mined_total.toFixed(2)} HNT`));
+        console.log(colors.bgBrightGreen(`Taxable income for period $${taxable_total.toFixed(2)}`));
 
         csv(results, {
             header: true,
@@ -90,7 +95,7 @@ async.eachSeries(_.split(HT_ADDRESSES, ','), (address, callback) => {
             fs.writeFile(`reports/${address}_${moment(START_DATE).format('YYYY-MM-DD')}_${moment(END_DATE).format('YYYY-MM-DD')}.csv`, data, function (err) {
                 if (err) callback(err);
 
-                console.log(colors.bgBrightYellow(`FILE: reports/${address}_${moment(START_DATE).format('YYYY-MM-DD')}_${moment(END_DATE).format('YYYY-MM-DD')}.csv`))
+                console.log(colors.bgYellow(`FILE: reports/${address}_${moment(START_DATE).format('YYYY-MM-DD')}_${moment(END_DATE).format('YYYY-MM-DD')}.csv`))
                 
                 callback(err);
             });
