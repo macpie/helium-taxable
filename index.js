@@ -18,7 +18,7 @@ const miner_history = (address, callback) => {
     let days = 1;
 
     console.log(`getting data from ${moment(START_DATE).format('YYYY-MM-DD')} to ${moment(END_DATE).format('YYYY-MM-DD')} Total: ${MAX_DAYS} Days for ${colors.bgYellow(address)}`);
-    console.log(colors.bgBrightRed(`GO GRAB A COFFE! ESTIMATED TIME ${moment.duration(1*MAX_DAYS, "seconds").humanize()}`));
+    console.log(colors.bgBrightRed(`GO GRAB A COFFEE! ESTIMATED TIME ${moment.duration(1*MAX_DAYS, "seconds").humanize()}`));
 
     function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
