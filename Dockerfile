@@ -2,12 +2,13 @@ FROM node:15.6
 
 WORKDIR /opt/helium-taxable
 
-ADD package.json package.json
-ADD package-lock.json package-lock.json
-
-RUN npm install
-ADD index.js index.js
+COPY package.json package.json
+COPY package-lock.json package-lock.json
 
 RUN mkdir reports
+RUN mkdir data
+
+RUN npm install
+COPY index.js index.js
 
 CMD ["npm", "start"]

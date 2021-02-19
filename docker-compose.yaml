@@ -5,9 +5,7 @@ services:
     image: macpie/helium-taxable:latest
     container_name: helium_taxable
     tty: true
-    environment:
-      HT_ADDRESSES: XX,YY
-      HT_START_DATE: '2021-01-01'
-      HT_END_DATE: '2021-01-07'
+    env_file: .env
     volumes:
-      - "./reports:/opt/helium-taxable/reports"
+      - ./reports:/opt/helium-taxable/reports
+      - ./data:/opt/helium-taxable/data
