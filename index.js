@@ -21,6 +21,8 @@ const get_days = (start, end) => {
         start = moment(start).add(1, 'days');
     }
 
+    days.push(moment(end).format('YYYY-MM-DD'));
+
     return days;
 };
 const prices_file = 'data/prices.json';
